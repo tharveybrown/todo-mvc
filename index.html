@@ -1,51 +1,200 @@
-<!doctype html>
-<html lang="en" data-framework="javascript">
-	<head>
-		<meta charset="utf-8">
-		<title>VanillaJS • TodoMVC</title>
-		<link rel="stylesheet" href="modules/todomvc-common/base.css">
-		<link rel="stylesheet" href="modules/todomvc-app-css/index.css">
-	</head>
-	<body>
-		<section class="todoapp">
-			<header class="header">
-				<h1>todos</h1>
-				<input class="new-todo" placeholder="What needs to be done?" autofocus>
-			</header>
-			<section class="main">
-				<input id="toggle-all" class="toggle-all" type="checkbox">
-				<label for="toggle-all">Mark all as complete</label>
-				<ul class="todo-list"></ul>
-			</section>
-			<footer class="footer">
-				<span class="todo-count"></span>
-				<ul class="filters">
-					<li>
-						<a href="#/" class="selected">All</a>
-					</li>
-					<li>
-						<a href="#/active">Active</a>
-					</li>
-					<li>
-						<a href="#/completed">Completed</a>
-					</li>
-				</ul>
-				<button class="clear-completed">Clear completed</button>
-			</footer>
-		</section>
-		<footer class="info">
-			<p>Double-click to edit a todo</p>
-			<p>Created by <a href="http://twitter.com/oscargodson">Oscar Godson</a></p>
-			<p>Refactored by <a href="https://github.com/cburgmer">Christoph Burgmer</a></p>
-			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
-		</footer>
-		<script src="modules/todomvc-common/base.js"></script>
-		<script src="js/helpers.js"></script>
-		<script src="js/store.js"></script>
-		<script src="js/model.js"></script>
-		<script src="js/template.js"></script>
-		<script src="js/view.js"></script>
-		<script src="js/controller.js"></script>
-		<script src="js/app.js"></script>
-	</body>
-</html>
+<html>
+<head>
+  <title>Sol LeWitt Wall Drawing 87</title>
+  
+  <div class="drawing">
+    <div id="grid"></div>
+  </div>
+  
+  <button class="tablink" id="defaultOpen">London</button>
+  <button class="tablink" >Paris</button>
+  <button class="tablink" >Tokyo</button>
+  <button class="tablink" >Oslo</button>
+	
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="https://unpkg.com/textures@1.0.4/textures.js"></script>
+	<style type="text/css">
+		.drawing {
+			margin: 0 auto;
+			text-align: center;
+			width: 900px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		#grid {
+			display: inline-block;
+		}
+    .tablink {
+      background-color: #555;
+      color: white;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      font-size: 17px;
+      width: 25%;
+    }
+
+    /* Change background color of buttons on hover */
+    .tablink:hover {
+      background-color: #777;
+    }
+
+	</style>
+</head>
+<body>
+
+<div class="drawing">
+	<div id="grid"></div>
+</div>
+
+<script type="text/javascript">
+function gridData() {
+	var data = new Array();
+	var id = 1;
+	var xpos = 4.1; 
+	var ypos = 4.5;
+	var width = 500.6;
+	var height = 500.5;
+	var click = 0;
+	
+	// iterate for rows	
+	for (var row = 0; row < 2; row++) {
+		data.push( new Array() );
+		
+	// iterate for cells/columns inside rows
+		for (var column = 0; column < 2; column++) {
+			data[row].push({
+				id: id,
+				x: xpos,
+				y: ypos,
+				width: width,
+				height: height
+			})
+			xpos += width;
+			id += 1;
+		}
+		xpos = 4.5;
+		ypos += height;	
+	}
+	return data;
+}
+
+var gridData = gridData();	
+
+var grid = d3.select("#grid")
+	.append("svg")
+	.attr("width","1010px")
+	.attr("height","1010px");
+
+var size = 10;
+var strokewidth = 1;
+var stroke = "#111"
+
+var t1 = textures.lines()
+          .size(size)
+          .orientation("vertical")
+          .strokeWidth(strokewidth)
+          .stroke("#7c7c7c"),
+      t2 = textures.lines()
+	  	  .size(size)
+          .orientation("horizontal")
+          .strokeWidth(strokewidth)
+          .stroke("#ffef81"),
+      t3 = textures.lines()
+          .size(size)
+		  .orientation("diagonal")
+          .strokeWidth(strokewidth)
+          .stroke("#e07b44"),
+      t4 = textures.lines()
+          .size(size)
+		  .orientation("6/8")
+          .strokeWidth(strokewidth)
+          .stroke("#a1520b");
+          
+ grid.call(t1);
+ grid.call(t2);
+ grid.call(t3);
+ grid.call(t4);
+ 
+ var t = d3.transition()
+    .duration(750)
+    .ease(d3.easeLinear);
+	
+var row = grid.selectAll(".row")
+	.data(gridData)
+	.enter().append("g")
+	.attr("class", "row");
+    	
+var column = row.selectAll(".square")
+	.data(function(d) { return d; })
+	.enter().append("rect").transition(t)
+	.attr("class","square")
+	.attr("x", function(d) { return d.x; })
+	.attr("y", function(d) { return d.y; })
+	.attr("width", function(d) { return d.width; })
+	.attr("height", function(d) { return d.height; })
+	.style("fill", t1.url());
+	
+var column = row.selectAll(".second-square")
+	.data(function(d) { return d; })
+	.enter().append("rect").transition(t).delay(1000)
+	.attr("class","second-square")
+	.attr("x", function(d) { return d.x; })
+	.attr("y", function(d) { return d.y; })
+	.attr("width", function(d) { return d.width; })
+	.attr("height", function(d) { return d.height; })
+	.style("fill", function(d) {            
+            if (d.id == 1) {return "none"}
+            if (d.id == 2) {return t2.url()}
+            if (d.id == 3) {return t2.url()}
+            if (d.id == 4) {return t2.url()}  
+	;});
+	
+var column = row.selectAll(".third-square")
+	.data(function(d) { return d; })
+	.enter().append("rect").transition(t).delay(2000)
+	.attr("class","third-square")
+	.attr("x", function(d) { return d.x; })
+	.attr("y", function(d) { return d.y; })
+	.attr("width", function(d) { return d.width; })
+	.attr("height", function(d) { return d.height; })
+	.style("fill", function(d) {            
+            if (d.id == 1) {return "none"}
+            if (d.id == 2) {return "none"}
+            if (d.id == 3) {return t3.url()}
+            if (d.id == 4) {return t3.url()}  
+	;});	
+
+var column = row.selectAll(".fourth-square")
+	.data(function(d) { return d; })
+	.enter().append("rect").transition(t).delay(3000)
+	.attr("class","fourth-square")
+	.attr("x", function(d) { return d.x; })
+	.attr("y", function(d) { return d.y; })
+	.attr("width", function(d) { return d.width; })
+	.attr("height", function(d) { return d.height; })
+	.style("fill", function(d) {            
+            if (d.id == 1) {return "none"}
+            if (d.id == 2) {return "none"}
+            if (d.id == 3) {return "none"}
+            if (d.id == 4) {return t4.url()}  
+	;});
+
+  var column = row.selectAll(".fourth-square")
+	.data(function(d) { return d; })
+	.enter().append("rect").transition(t).delay(3000)
+	.attr("class","fourth-square")
+	.attr("x", function(d) { return d.x; })
+	.attr("y", function(d) { return d.y; })
+	.attr("width", function(d) { return d.width; })
+	.attr("height", function(d) { return d.height; })
+	.style("fill", function(d) {            
+            if (d.id == 1) {return "none"}
+            if (d.id == 2) {return "none"}
+            if (d.id == 3) {return "none"}
+            if (d.id == 4) {return t4.url()}  
+	;});
+	
+</script>	

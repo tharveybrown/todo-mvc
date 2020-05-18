@@ -57,11 +57,13 @@ function gridData() {
 }
 
 var gridData = gridData();	
+var w = window.innerWidth;
+var h = window.innerHeight;
 
 var grid = d3.select("#grid")
 	.append("svg")
-	.attr("width","1010px")
-	.attr("height","1010px");
+	.attr("width",w)
+	.attr("height",h);
 
 var size = 10;
 var strokewidth = 1;

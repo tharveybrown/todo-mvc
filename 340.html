@@ -99,7 +99,6 @@ var drawings = [
 
 function drawShapes(){
   drawings.forEach(function(part){
-    // ctx.clearRect(0, 0, width, height)
     ctx.save();
     part(); // run your function
     ctx.restore();

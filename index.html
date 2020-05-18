@@ -1,53 +1,28 @@
 <html>
 <head>
-  <title>Sol LeWitt Wall Drawing 87</title>
-  
-  <div class="drawing">
-    <div id="grid"></div>
-  </div>
-  
-  <button class="tablink" id="defaultOpen">London</button>
-  <button class="tablink" >Paris</button>
-  <button class="tablink" >Tokyo</button>
-  <button class="tablink" >Oslo</button>
+	<title>Sol LeWitt - 87</title>
 	
+
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<script src="https://unpkg.com/textures@1.0.4/textures.js"></script>
-	<style type="text/css">
-		.drawing {
-			margin: 0 auto;
-			text-align: center;
-			width: 900px;
-			margin-top: 10px;
-			margin-bottom: 10px;
-		}
-		#grid {
-			display: inline-block;
-		}
-    .tablink {
-      background-color: #555;
-      color: white;
-      float: left;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      padding: 14px 16px;
-      font-size: 17px;
-      width: 25%;
-    }
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
 
-    /* Change background color of buttons on hover */
-    .tablink:hover {
-      background-color: #777;
-    }
-
-	</style>
 </head>
 <body>
+	<div class="navigation">
+		<a href="#" id="isDisabled" class="previous round">&#8249;</a>
+		<a href="340.html" class="next round">&#8250;</a>
+	</div>
 
-<div class="drawing">
-	<div id="grid"></div>
-</div>
+	<h2>Instructions: <span><a href="https://massmoca.org/event/walldrawing87/">87</a></span></h2>
+	<p id="instructions">A square divided horizontally and vertically into four equal 
+		parts, each with lines and colors in four directions superimposed progressively.
+	</p>
+	<div class="drawing">
+		<div id="grid"></div>
+	</div>
+
+</body>
 
 <script type="text/javascript">
 function gridData() {

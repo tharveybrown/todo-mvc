@@ -37,7 +37,8 @@ function gridData() {
 	} else {
 		height = width
 	}
-		
+	console.log("HEIGHT", height)
+	console.log("width", width)
 	var click = 0;
 	
 	// iterate for rows	
@@ -63,8 +64,16 @@ function gridData() {
 }
 
 var gridData = gridData();	
+
 var w = window.innerWidth;
 var h = window.innerHeight;
+if (w >= h ) {
+	h = w
+} else {
+	w = h
+}
+
+
 
 var grid = d3.select("#grid")
 	.append("svg")

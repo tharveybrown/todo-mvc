@@ -30,8 +30,14 @@ function gridData() {
 	var id = 1;
 	var xpos = 4.1; 
 	var ypos = 4.5;
-	var width = 500.6;
-	var height = 500.5;
+	var width = window.innerWidth / 3;
+	var height = width.innerHeight;
+	if (height <= width) {
+		width = height
+	} else {
+		height = width
+	}
+		
 	var click = 0;
 	
 	// iterate for rows	
